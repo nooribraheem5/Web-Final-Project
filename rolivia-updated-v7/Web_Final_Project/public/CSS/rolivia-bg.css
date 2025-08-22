@@ -1,0 +1,54 @@
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(1200px 800px at 85% 15%, rgba(236, 72, 153, .06), transparent 70%),
+    url("assets/bg/rolivia-soft-bg.svg") center/cover no-repeat fixed;
+  opacity: .9;
+  pointer-events: none
+}
+
+#hero {
+  position: relative;
+  isolation: isolate
+}
+
+#hero::before {
+  content: "";
+  position: absolute;
+  inset: -36px 0 -24px 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 600px at 85% 10%, rgba(236, 72, 153, .10), transparent 70%),
+    url("assets/bg/rolivia-soft-bg.svg") center/1200px auto no-repeat;
+  opacity: .95;
+  border-radius: 28px
+}
+
+#hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .85), rgba(255, 255, 255, .95));
+  border-radius: 28px
+}
+
+#products {
+  position: relative;
+  isolation: isolate
+}
+
+#products::before {
+  content: "";
+  position: absolute;
+  inset: -20px 0;
+  z-index: -1;
+  background:
+    radial-gradient(800px 500px at 85% 10%, rgba(236, 72, 153, .08), transparent 70%),
+    url("assets/bg/rolivia-soft-bg.svg") center/cover no-repeat;
+  opacity: .9;
+  border-radius: 20px
+}

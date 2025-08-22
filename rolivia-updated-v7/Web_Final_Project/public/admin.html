@@ -1,0 +1,13 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>لوحة التعليقات | Rolivia</title>
+<style>body{font-family:system-ui,Tajawal,sans-serif;margin:24px;background:#fff7fb}.row{display:flex;gap:10px;align-items:center}.card{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 6px 20px rgba(2,6,23,.06)}button{padding:8px 12px;border-radius:10px;border:1px solid #ddd;cursor:pointer}button.primary{background:#ec4899;color:#fff;border:0}</style>
+</head><body>
+<h2>إدارة التعليقات</h2><div class="row"><label>مفتاح الإدارة:</label><input id="key" value="secret123"/><button id="refresh">تحديث</button></div><div id="list"></div>
+<script>
+const apiBase=(location.origin.includes(':3000'))?location.origin:'http://localhost:3000';
+const list=document.getElementById('list'); const keyInput=document.getElementById('key');
+document.getElementById('refresh').addEventListener('click', load);
+async function load(){ list.innerHTML='...'; const res=await fetch(`${apiBase}/api/comments?approved=0`); const items=await res.json(); list.innerHTML=''; items.forEach(c=>{ const el=document.createElement('div'); el.className='card'; el.innerHTML=`<div class="row" style="justify-content:space-between"><strong>#${c.id} — ${c.name||'مستخدم'}</strong><span>${'★'.repeat(c.rating||5)}</span></div><p>${c.message}</p><div class="row"><button class="primary">نشر</button></div>`; el.querySelector('button').addEventListener('click', async ()=>{ const key=keyInput.value.trim(); const ok=await fetch(`${apiBase}/api/comments/${c.id}/approve?key=${encodeURIComponent(key)}`,{method:'PUT'}).then(r=>r.ok).catch(()=>false); if(ok){ el.remove(); } else { alert('فشل النشر — تحقق من المفتاح'); } }); list.appendChild(el); }); }
+load();
+</script></body></html>
